@@ -29,20 +29,52 @@
 		8A768F0A2F2A2CFD00C323CF /* Wikipedia Places AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Wikipedia Places AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8A768F272F2A305900C323CF /* Exceptions for "Tests" folder in "Wikipedia Places App" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WikipediaPlacesTests/WikipediaPlacesTests.swift,
+				WikipediaPlacesUITests/WikipediaPlacesUITests.swift,
+				WikipediaPlacesUITests/WikipediaPlacesUITestsLaunchTests.swift,
+			);
+			target = 8A768EF22F2A2CFB00C323CF /* Wikipedia Places App */;
+		};
+		8A768F282F2A305900C323CF /* Exceptions for "Tests" folder in "Wikipedia Places AppTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WikipediaPlacesTests/WikipediaPlacesTests.swift,
+			);
+			target = 8A768EFF2F2A2CFD00C323CF /* Wikipedia Places AppTests */;
+		};
+		8A768F292F2A305900C323CF /* Exceptions for "Tests" folder in "Wikipedia Places AppUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				WikipediaPlacesUITests/WikipediaPlacesUITests.swift,
+				WikipediaPlacesUITests/WikipediaPlacesUITestsLaunchTests.swift,
+			);
+			target = 8A768F092F2A2CFD00C323CF /* Wikipedia Places AppUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		8A768EF52F2A2CFB00C323CF /* Wikipedia Places App */ = {
+		8A768EF52F2A2CFB00C323CF /* App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Wikipedia Places App";
+			path = App;
 			sourceTree = "<group>";
 		};
-		8A768F032F2A2CFD00C323CF /* Wikipedia Places AppTests */ = {
+		8A768F1E2F2A303B00C323CF /* Tests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Wikipedia Places AppTests";
+			exceptions = (
+				8A768F272F2A305900C323CF /* Exceptions for "Tests" folder in "Wikipedia Places App" target */,
+				8A768F282F2A305900C323CF /* Exceptions for "Tests" folder in "Wikipedia Places AppTests" target */,
+				8A768F292F2A305900C323CF /* Exceptions for "Tests" folder in "Wikipedia Places AppUITests" target */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
-		8A768F0D2F2A2CFD00C323CF /* Wikipedia Places AppUITests */ = {
+		8A768F2A2F2A329B00C323CF /* Assets */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Wikipedia Places AppUITests";
+			path = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +107,9 @@
 		8A768EEA2F2A2CFB00C323CF = {
 			isa = PBXGroup;
 			children = (
-				8A768EF52F2A2CFB00C323CF /* Wikipedia Places App */,
-				8A768F032F2A2CFD00C323CF /* Wikipedia Places AppTests */,
-				8A768F0D2F2A2CFD00C323CF /* Wikipedia Places AppUITests */,
+				8A768F2A2F2A329B00C323CF /* Assets */,
+				8A768F1E2F2A303B00C323CF /* Tests */,
+				8A768EF52F2A2CFB00C323CF /* App */,
 				8A768EF42F2A2CFB00C323CF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,7 +140,9 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				8A768EF52F2A2CFB00C323CF /* Wikipedia Places App */,
+				8A768EF52F2A2CFB00C323CF /* App */,
+				8A768F1E2F2A303B00C323CF /* Tests */,
+				8A768F2A2F2A329B00C323CF /* Assets */,
 			);
 			name = "Wikipedia Places App";
 			packageProductDependencies = (
@@ -130,9 +164,6 @@
 			dependencies = (
 				8A768F022F2A2CFD00C323CF /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				8A768F032F2A2CFD00C323CF /* Wikipedia Places AppTests */,
-			);
 			name = "Wikipedia Places AppTests";
 			packageProductDependencies = (
 			);
@@ -152,9 +183,6 @@
 			);
 			dependencies = (
 				8A768F0C2F2A2CFD00C323CF /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				8A768F0D2F2A2CFD00C323CF /* Wikipedia Places AppUITests */,
 			);
 			name = "Wikipedia Places AppUITests";
 			packageProductDependencies = (
@@ -192,6 +220,7 @@
 			knownRegions = (
 				en,
 				Base,
+				nl,
 			);
 			mainGroup = 8A768EEA2F2A2CFB00C323CF;
 			minimizedProjectReferenceProxies = 1;
@@ -326,6 +355,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -380,6 +410,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 			};
 			name = Release;
 		};
@@ -394,6 +425,8 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Wikipedia Places";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -436,6 +469,8 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Wikipedia Places";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

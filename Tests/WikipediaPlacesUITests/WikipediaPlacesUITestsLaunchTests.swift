@@ -7,7 +7,7 @@
 
 import XCTest
 
-final class Wikipedia_Places_AppUITestsLaunchTests: XCTestCase {
+final class WikipediaPlacesUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
