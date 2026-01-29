@@ -6,7 +6,7 @@
 //
 
 extension PlacesListViewModel {
-    enum ViewState {
+    enum ViewState: Equatable {
         case loaded
         case loading
         case searching

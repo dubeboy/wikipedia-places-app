@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum WikipediaPlacesAppError: LocalizedError {
+enum WikipediaPlacesAppError: Equatable, LocalizedError {
     case unknownError
     case serverError(statusCode: Int)
 

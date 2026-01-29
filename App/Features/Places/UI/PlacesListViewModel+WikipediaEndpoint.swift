@@ -5,26 +5,26 @@
 //  Created by Divine Dube on 29/01/2026.
 //
 
-import MapKit
+import Foundation
 
 extension PlacesListViewModel {
     enum WikipediaEndpoint: EndpointProtocol {
-        case openWikipediaAppPlaceDetailsDeeplink(place: String, coordinates: CLLocationCoordinate2D)
+        case openWikipediaAppPlaceDetailsDeeplink(place: LocationModel)
 
         var path: String {
             switch self {
-            case .openWikipediaAppPlaceDetailsDeeplink(let name, _):
-                name
+            case .openWikipediaAppPlaceDetailsDeeplink(let place):
+                "/wiki/\(place.name)"
             }
         }
 
         var urlParams: [URLQueryItem] {
             switch self {
-            case .openWikipediaAppPlaceDetailsDeeplink(_, let coordinates):
+            case .openWikipediaAppPlaceDetailsDeeplink(let place):
                 [
                     URLQueryItem(name: "WMFPage", value: "Places"),
-                    URLQueryItem(name: "lat", value: String(coordinates.latitude)),
-                    URLQueryItem(name: "lon", value: String(coordinates.longitude)),
+                    URLQueryItem(name: "lat", value: String(place.lat)),
+                    URLQueryItem(name: "lon", value: String(place.long)),
                 ]
             }
         }
@@ -36,7 +36,7 @@ extension PlacesListViewModel {
         var baseURL: URL {
             switch self {
             case .openWikipediaAppPlaceDetailsDeeplink:
-                guard let serverURL = URL(string: "https://en.wikipedia.org/wiki/") else {
+                guard let serverURL = URL(string: "https://en.wikipedia.org") else {
                     fatalError("Deep link URL is invalid")
                 }
                 return serverURL

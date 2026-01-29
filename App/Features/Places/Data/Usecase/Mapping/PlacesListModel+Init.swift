@@ -12,12 +12,14 @@ extension LocationModel {
         id = "\(response.lat)-\(response.long)"
         lat = response.lat
         long = response.long
-        name = response.name
+        name = response.name ?? ""
     }
 
-    init(from cLocation: CLLocation) {
-        let coordinates = cLocation.coordinate
+    init(from mkItem: MKMapItem) {
+        let coordinates = mkItem.location.coordinate
         id = "\(coordinates.latitude)-\(coordinates.longitude)"
         lat = coordinates.latitude
+        long = coordinates.longitude
+        name = mkItem.name ?? ""
     }
 }

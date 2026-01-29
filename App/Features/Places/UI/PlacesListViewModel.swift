@@ -13,11 +13,17 @@ final class PlacesListViewModel: ObservableObject {
 
     @Published private(set) var searchResults: [LocationModel] = []
     @Published private(set) var state: ViewState = .loading
-    @Published private(set) var searchQuery: String = ""
+    @Published var shouldShowAlertError: Bool = false
+    @Published var searchQuery: String = ""
 
-    private var places: [LocationModel] = []
+    private var places: [LocationModel] = [] {
+        didSet {
+            searchResults = places
+        }
+    }
     private let usecase: PlacesListUsecaseProtocol
     private var cancellables = Set<AnyCancellable>()
+    private var searchTask: Task<Void, Never>?
 
     let config: Configuration
 
@@ -27,28 +33,56 @@ final class PlacesListViewModel: ObservableObject {
     ) {
         self.config = configuration
         self.usecase = usecase
+
+        observeSearchQuery()
+    }
+
+    @MainActor
+    func getPlacesList() async {
+        state = .loading
+        do {
+            places = try await usecase.getPlaces()
+            state = .loaded
+        } catch {
+            state = .error(error: WikipediaPlacesAppError.unknownError)
+            shouldShowAlertError = true
+        }
     }
 
     @MainActor
     private func observeSearchQuery() {
         $searchQuery
-            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .debounce(
+                for: .milliseconds(config.constants.debounceMs),
+                scheduler: DispatchQueue.main
+            )
             .sink { [weak self] query in
                 guard let self else { return }
-                state = .searching
-                if query.isEmpty {
-                    self.searchResults = self.places
-                    state = .loaded
-                    return
-                }
-                Task {
-                    let mapsSearchResults = await self.fetchUserCustomLocations(query: query)
-                    self.searchResults = mapsSearchResults
+                self.searchTask?.cancel()
+                searchTask = Task { @MainActor in
+                    guard !query.isEmpty else {
+                        self.searchResults = self.places
+                        self.state = .loaded
+                        return
+                    }
+                    self.state = .searching
+                    self.searchResults = await self.fetchUserCustomLocations(query: query)
                     self.state = .loaded
                 }
             }
             .store(in: &cancellables)
     }
+
+    @MainActor
+    func didTapLocationItem(_ place: LocationModel) {
+        let deeplinkEndpoint = WikipediaEndpoint.openWikipediaAppPlaceDetailsDeeplink(place: place)
+        guard let deeplink = try? deeplinkEndpoint.createURLRequest().url else {
+            return
+        }
+
+        UIApplication.shared.open(deeplink, options: [:], completionHandler: nil)
+    }
+
 
     @MainActor
     private func fetchUserCustomLocations(query: String) async -> [LocationModel] {
@@ -57,8 +91,6 @@ final class PlacesListViewModel: ObservableObject {
         guard let response = try? await search.start() else {
             return []
         }
-        return response.mapItems.map {
-            PlacesListModel(name: $0.name ?? Constants.noName, lat: $0.placemark.coordinate.latitude, long: $0.placemark.coordinate.longitude)
-        }
+        return response.mapItems.map(LocationModel.init(from:))
     }
 }

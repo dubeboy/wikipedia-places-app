@@ -6,7 +6,7 @@
 //
 
 struct LocationResponse: Decodable {
-    let name: String
+    let name: String?
     let lat: Double
     let long: Double
 }

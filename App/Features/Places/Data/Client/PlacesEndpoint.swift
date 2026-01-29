@@ -10,7 +10,7 @@ enum PlacesEndpoint: EndpointProtocol {
     var path: String {
         switch self {
         case .getPlaces:
-            "abnamrocoesd/assignment-ios/main/locations.json"
+            "/abnamrocoesd/assignment-ios/main/locations.json"
         }
     }
 

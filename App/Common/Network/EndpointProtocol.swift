@@ -50,12 +50,16 @@ extension EndpointProtocol {
         components.host = baseURL.host()
         components.path = path
 
-        var urlRequest = URLRequest(url: baseURL)
-        urlRequest.httpMethod = requestType.rawValue
-
         if !urlParams.isEmpty {
             components.queryItems = urlParams
         }
+
+        guard let url = components.url else {
+           throw WikipediaPlacesAppError.unknownError
+        }
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = requestType.rawValue
 
         if let httpBody {
             let encoder = JSONEncoder()
