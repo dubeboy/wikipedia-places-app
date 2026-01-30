@@ -25,6 +25,7 @@ We chose this architecture because it is **simple, scalable, and maintainable**,
 - Should **not contain any business logic**  
 - Responsible only for rendering the current state of the view  
 - Each View has **one ViewModel**
+- Each Component of this architecture is testable. We currently using constructor injection
 
 ---
 
@@ -84,11 +85,11 @@ The app is divided into two main components:
 The `Common` module contains shared infrastructure, including:
 
 ### RequestManager
-- Handles generic encoding and decoding of HTTP requests and responses
+- Handles generic encoding and decoding of HTTP requests and responses.
 
 ### EndpointProtocol
 - Enables the creation of structured HTTP `URLRequest`s  
-- Makes defining endpoints consistent, reusable and easy
+- Makes defining endpoints consistent, reusable and easy.
 
 Example:
 
@@ -125,7 +126,7 @@ This folder contains all logic related to fetching and transforming data.
 - Responsible for making HTTP requests  
 
 #### Model
-- Contains the **Codable** response objects from the network  
+- Contains the **Codable** response objects from the network.
 
 #### Use Case
 Includes:
@@ -157,6 +158,6 @@ We also show case how we test all the mentioned layers of the app.
 
 All Classes are `final`
 
-* This app also supports Localization to `Dutch`
+* This app also supports Localization to `Dutch`.
 
-* We have added an easy win implicit animations
+* We have added an easy win implicit animations.
