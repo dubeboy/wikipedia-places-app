@@ -5,7 +5,7 @@
 //  Created by Divine Dube on 29/01/2026.
 //
 
-struct LocationModel: Equatable, Identifiable {
+nonisolated struct LocationModel: Equatable, Identifiable {
     let id: String
     let name: String
     let lat: Double

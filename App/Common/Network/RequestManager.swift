@@ -11,6 +11,7 @@ protocol RequestManagerProtocol {
     func perform<T: Decodable>(request: EndpointProtocol) async throws -> T
 }
 
+nonisolated
 final class RequestManager: RequestManagerProtocol {
     func perform<T: Decodable>(request: any EndpointProtocol) async throws -> T {
         let request = try request.createURLRequest()

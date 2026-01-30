@@ -14,10 +14,10 @@ extension PlacesListViewModel {
     }
     struct Strings {
         var title = String(localized: .placesTitle)
-        let retryButtonTitle: String = String(localized: .placesButtonRetryTitle)
-        let searchBarPrompt: String = String(localized: .placesSearchBarPrompt)
-        let alertTitle: String = String(localized: .placesAlertTitle)
-        let alertButtonTitle: String = String(localized: .placesAlertButtonTitleOk)
+        var retryButtonTitle: String = String(localized: .placesButtonRetryTitle)
+        var searchBarPrompt: String = String(localized: .placesSearchBarPrompt)
+        var alertTitle: String = String(localized: .placesAlertTitle)
+        var alertButtonTitle: String = String(localized: .placesAlertButtonTitleOk)
     }
     struct Constants {
         var debounceMs = 500

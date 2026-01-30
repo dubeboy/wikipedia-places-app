@@ -12,7 +12,7 @@ extension LocationModel {
         id = "\(response.lat)-\(response.long)"
         lat = response.lat
         long = response.long
-        name = response.name ?? ""
+        name = response.name ?? "\(response.lat), \(response.long)"
     }
 
     init(from mkItem: MKMapItem) {
@@ -20,6 +20,6 @@ extension LocationModel {
         id = "\(coordinates.latitude)-\(coordinates.longitude)"
         lat = coordinates.latitude
         long = coordinates.longitude
-        name = mkItem.name ?? ""
+        name = mkItem.name ?? "\(coordinates.latitude), \(coordinates.longitude)"
     }
 }

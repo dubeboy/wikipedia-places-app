@@ -10,7 +10,6 @@ import Combine
 import Foundation
 
 final class PlacesListViewModel: ObservableObject {
-
     @Published private(set) var searchResults: [LocationModel] = []
     @Published private(set) var state: ViewState = .loading
     @Published var shouldShowAlertError: Bool = false
@@ -22,6 +21,7 @@ final class PlacesListViewModel: ObservableObject {
         }
     }
     private let usecase: PlacesListUsecaseProtocol
+    private let mapsService: PlacesMapKitServiceProtocol
     private var cancellables = Set<AnyCancellable>()
     private var searchTask: Task<Void, Never>?
 
@@ -29,10 +29,12 @@ final class PlacesListViewModel: ObservableObject {
 
     init(
         usecase: PlacesListUsecaseProtocol = PlacesListUsecase(),
+        mapsService: PlacesMapKitServiceProtocol = PlacesMapKitService(),
         configuration: Configuration = Configuration()
     ) {
         self.config = configuration
         self.usecase = usecase
+        self.mapsService = mapsService
 
         observeSearchQuery()
     }
@@ -43,8 +45,11 @@ final class PlacesListViewModel: ObservableObject {
         do {
             places = try await usecase.getPlaces()
             state = .loaded
+        } catch let error as WikipediaPlacesAppError {
+            state = .error(error: error)
+            shouldShowAlertError = true
         } catch {
-            state = .error(error: WikipediaPlacesAppError.unknownError)
+            state = .error(error: .unknownError)
             shouldShowAlertError = true
         }
     }
@@ -76,21 +81,16 @@ final class PlacesListViewModel: ObservableObject {
     @MainActor
     func didTapLocationItem(_ place: LocationModel) {
         let deeplinkEndpoint = WikipediaEndpoint.openWikipediaAppPlaceDetailsDeeplink(place: place)
-        guard let deeplink = try? deeplinkEndpoint.createURLRequest().url else {
-            return
-        }
-
-        UIApplication.shared.open(deeplink, options: [:], completionHandler: nil)
+        mapsService.openWikipediaApp(deeplinkUrl: deeplinkEndpoint)
     }
 
 
     @MainActor
     private func fetchUserCustomLocations(query: String) async -> [LocationModel] {
-        let request = MKLocalSearch.Request(naturalLanguageQuery: query)
-        let search = MKLocalSearch(request: request)
-        guard let response = try? await search.start() else {
-            return []
+        do {
+            return try await mapsService.fetchUserCustomLocations(query: query)
+        } catch {
+            return places
         }
-        return response.mapItems.map(LocationModel.init(from:))
     }
 }

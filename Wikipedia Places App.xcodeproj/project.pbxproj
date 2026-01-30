@@ -33,6 +33,16 @@
 		8A768F272F2A305900C323CF /* Exceptions for "Tests" folder in "Wikipedia Places App" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				WikipediaPlacesTests/Features/Places/Data/Client/PlacesClientTests.swift,
+				WikipediaPlacesTests/Features/Places/Data/Usecase/PlacesListUsecaseTests.swift,
+				WikipediaPlacesTests/Features/Places/PlacesListViewModelTests.swift,
+				WikipediaPlacesTests/Mock/StubPlacesClient.swift,
+				WikipediaPlacesTests/Mock/StubPlacesListUsecase.swift,
+				"WikipediaPlacesTests/Mock/StubPlacesListUsecase+Data.swift",
+				WikipediaPlacesTests/Mock/StubPlacesMapsKitService.swift,
+				WikipediaPlacesTests/Mock/StubRequestManager.swift,
+				"WikipediaPlacesTests/Mock/StubRequestManager+Data.swift",
+				WikipediaPlacesTests/Mock/StubResult.swift,
 				WikipediaPlacesTests/WikipediaPlacesTests.swift,
 				WikipediaPlacesUITests/WikipediaPlacesUITests.swift,
 				WikipediaPlacesUITests/WikipediaPlacesUITestsLaunchTests.swift,
@@ -42,6 +52,16 @@
 		8A768F282F2A305900C323CF /* Exceptions for "Tests" folder in "Wikipedia Places AppTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				WikipediaPlacesTests/Features/Places/Data/Client/PlacesClientTests.swift,
+				WikipediaPlacesTests/Features/Places/Data/Usecase/PlacesListUsecaseTests.swift,
+				WikipediaPlacesTests/Features/Places/PlacesListViewModelTests.swift,
+				WikipediaPlacesTests/Mock/StubPlacesClient.swift,
+				WikipediaPlacesTests/Mock/StubPlacesListUsecase.swift,
+				"WikipediaPlacesTests/Mock/StubPlacesListUsecase+Data.swift",
+				WikipediaPlacesTests/Mock/StubPlacesMapsKitService.swift,
+				WikipediaPlacesTests/Mock/StubRequestManager.swift,
+				"WikipediaPlacesTests/Mock/StubRequestManager+Data.swift",
+				WikipediaPlacesTests/Mock/StubResult.swift,
 				WikipediaPlacesTests/WikipediaPlacesTests.swift,
 			);
 			target = 8A768EFF2F2A2CFD00C323CF /* Wikipedia Places AppTests */;

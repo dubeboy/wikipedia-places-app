@@ -9,7 +9,7 @@ protocol PlacesClientProtocol {
     func getPlaces() async throws -> PlacesResponse
 }
 
-final class PlacesClient: PlacesClientProtocol {
+nonisolated final class PlacesClient: PlacesClientProtocol {
     private let manager: RequestManagerProtocol
 
     init(manager: RequestManagerProtocol = RequestManager()) {
