@@ -11,3 +11,4 @@ nonisolated struct LocationModel: Equatable, Identifiable {
     let lat: Double
     let long: Double
 }
+ 

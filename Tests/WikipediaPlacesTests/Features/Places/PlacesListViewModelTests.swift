@@ -66,10 +66,13 @@ final class PlacesListViewModelTests: XCTestCase {
         XCTAssertEqual(mapsService.timesOpenWikipedia, 1)
         XCTAssertEqual(
             try? mapsService.deeplinkUrl?.createURLRequest().url,
-            try? PlacesListViewModel.WikipediaEndpoint
+            try? PlacesListViewModel
+                    .WikipediaEndpoint
                     .openWikipediaAppPlaceDetailsDeeplink(
                         place: Array.extepectedResponse.first!
-                    ).createURLRequest().url
+                    )
+                    .createURLRequest()
+                    .url
         )
     }
 }

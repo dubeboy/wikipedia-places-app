@@ -43,7 +43,6 @@
 				WikipediaPlacesTests/Mock/StubRequestManager.swift,
 				"WikipediaPlacesTests/Mock/StubRequestManager+Data.swift",
 				WikipediaPlacesTests/Mock/StubResult.swift,
-				WikipediaPlacesTests/WikipediaPlacesTests.swift,
 				WikipediaPlacesUITests/WikipediaPlacesUITests.swift,
 				WikipediaPlacesUITests/WikipediaPlacesUITestsLaunchTests.swift,
 			);
@@ -62,7 +61,6 @@
 				WikipediaPlacesTests/Mock/StubRequestManager.swift,
 				"WikipediaPlacesTests/Mock/StubRequestManager+Data.swift",
 				WikipediaPlacesTests/Mock/StubResult.swift,
-				WikipediaPlacesTests/WikipediaPlacesTests.swift,
 			);
 			target = 8A768EFF2F2A2CFD00C323CF /* Wikipedia Places AppTests */;
 		};
