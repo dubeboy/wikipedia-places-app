@@ -8,7 +8,7 @@
 import Foundation
 @testable import Wikipedia_Places_App
 
-final class StubPlacesMapsKitService: PlacesMapKitServiceProtocol {
+final class StubPlacesMapsKitUsecase: PlacesMapKitUsecaseProtocol {
     var timesOpenWikipedia: Int = 0
     var query: String? = nil
     var deeplinkUrl: (any EndpointProtocol)? = nil

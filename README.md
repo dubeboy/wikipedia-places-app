@@ -111,7 +111,7 @@ Each feature groups **related screens, entities, and models**.
 
 We use a **consistent, repeatable folder structure** for every feature and screen.
 
-<img src="./folder-structure-struct.png" height="400" style="width: auto;">
+<img src="./screen-folder-struct.png" height="400" style="width: auto;">
 
 Each screen contains the following:
 
@@ -149,6 +149,14 @@ Contains all SwiftUI views required to render the screen, including all localiza
 
 ## Tests
 
-This app has `100%` codecoverage for the `ViewModel`. and `67%` overral.
+This app has `100%` code coverage for the `ViewModel`. and `67%` overral.
 
 We also show case how we test all the mentioned layers of the app.
+
+## Misc
+
+All Classes are `final`
+
+* This app also supports Localization to `Dutch`
+
+* We have added an easy win implicit animations

@@ -21,7 +21,7 @@ final class PlacesListViewModel: ObservableObject {
         }
     }
     private let usecase: PlacesListUsecaseProtocol
-    private let mapsService: PlacesMapKitServiceProtocol
+    private let mapsUsecase: PlacesMapKitUsecaseProtocol
     private var cancellables = Set<AnyCancellable>()
     private var searchTask: Task<Void, Never>?
 
@@ -29,12 +29,12 @@ final class PlacesListViewModel: ObservableObject {
 
     init(
         usecase: PlacesListUsecaseProtocol = PlacesListUsecase(),
-        mapsService: PlacesMapKitServiceProtocol = PlacesMapKitService(),
+        mapsUsecase: PlacesMapKitUsecaseProtocol = PlacesMapKitUsecase(),
         configuration: Configuration = Configuration()
     ) {
         self.config = configuration
         self.usecase = usecase
-        self.mapsService = mapsService
+        self.mapsUsecase = mapsUsecase
 
         observeSearchQuery()
     }
@@ -81,14 +81,14 @@ final class PlacesListViewModel: ObservableObject {
     @MainActor
     func didTapLocationItem(_ place: LocationModel) {
         let deeplinkEndpoint = WikipediaEndpoint.openWikipediaAppPlaceDetailsDeeplink(place: place)
-        mapsService.openWikipediaApp(deeplinkUrl: deeplinkEndpoint)
+        mapsUsecase.openWikipediaApp(deeplinkUrl: deeplinkEndpoint)
     }
 
 
     @MainActor
     private func fetchUserCustomLocations(query: String) async -> [LocationModel] {
         do {
-            return try await mapsService.fetchUserCustomLocations(query: query)
+            return try await mapsUsecase.fetchUserCustomLocations(query: query)
         } catch {
             return places
         }

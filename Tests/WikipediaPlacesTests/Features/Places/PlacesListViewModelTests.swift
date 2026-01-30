@@ -13,7 +13,7 @@ import Combine
 final class PlacesListViewModelTests: XCTestCase {
     private var sut: PlacesListViewModel!
     private var usecase: StubPlacesListUsecase!
-    private var mapsService: StubPlacesMapsKitService!
+    private var mapsUsecase: StubPlacesMapsKitUsecase!
     private var configuration: PlacesListViewModel.Configuration!
     private var cancellables = Set<AnyCancellable>()
 
@@ -21,10 +21,10 @@ final class PlacesListViewModelTests: XCTestCase {
         super.setUp()
         usecase = StubPlacesListUsecase()
         configuration = PlacesListViewModel.Configuration()
-        mapsService = StubPlacesMapsKitService()
-        mapsService.getPlacesResult = .success(.extepectedResponse)
+        mapsUsecase = StubPlacesMapsKitUsecase()
+        mapsUsecase.getPlacesResult = .success(.extepectedResponse)
         sut = PlacesListViewModel(usecase: usecase,
-                                  mapsService: mapsService,
+                                  mapsUsecase: mapsUsecase,
                                   configuration: configuration)
     }
 
@@ -43,7 +43,7 @@ final class PlacesListViewModelTests: XCTestCase {
     func testSearch_When_searchQuery_Then_shouldFilter() async throws {
         let expectation = expectation(description: "Wait for debounce")
 
-        mapsService.getPlacesResult = .success(.extepectedResponse.filter { location in
+        mapsUsecase.getPlacesResult = .success(.extepectedResponse.filter { location in
             location.name.contains("Amsterdam")
         })
         sut.$state
@@ -63,9 +63,9 @@ final class PlacesListViewModelTests: XCTestCase {
 
     func testOpenWikipediaApp_When_clickOnLocation_Then_shouldOpenOfficialWikipediaApp() {
         sut.didTapLocationItem(Array.extepectedResponse.first!)
-        XCTAssertEqual(mapsService.timesOpenWikipedia, 1)
+        XCTAssertEqual(mapsUsecase.timesOpenWikipedia, 1)
         XCTAssertEqual(
-            try? mapsService.deeplinkUrl?.createURLRequest().url,
+            try? mapsUsecase.deeplinkUrl?.createURLRequest().url,
             try? PlacesListViewModel
                     .WikipediaEndpoint
                     .openWikipediaAppPlaceDetailsDeeplink(

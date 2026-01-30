@@ -8,12 +8,12 @@
 import MapKit
 import Foundation
 
-protocol PlacesMapKitServiceProtocol {
+protocol PlacesMapKitUsecaseProtocol {
     func openWikipediaApp(deeplinkUrl: EndpointProtocol)
     func fetchUserCustomLocations(query: String) async throws -> [LocationModel]
 }
 
-final class PlacesMapKitService: PlacesMapKitServiceProtocol {
+final class PlacesMapKitUsecase: PlacesMapKitUsecaseProtocol {
     func openWikipediaApp(deeplinkUrl: EndpointProtocol) {
         guard let deeplink = try? deeplinkUrl.createURLRequest().url else {
             return
