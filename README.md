@@ -1,94 +1,154 @@
 # Places
 
-This app allows you to enter a place and we can deeplink this place to the wikipedia app for more details.
+This app allows users to enter a place and deep-link directly to the Wikipedia app to view more details about that place.
+
+---
 
 # Architecture
 
-This app uses SwiftUI , MVVM+Usecase architecture. We are using this arctecture because its simple, scalable and maintainable for most moderate enterprise applications. 
-Also allows new developers to get up to spead because of the folder struture and the naminng conventions used.
+This app uses **SwiftUI** with an **MVVM + Use Case** architecture.  
 
-## Diagram
+We chose this architecture because it is **simple, scalable, and maintainable**, making it suitable for most moderate sized enterprise applications. It also allows new developers to get up to speed quickly thanks to the clear **folder structure** and consistent **naming conventions**.
+
+---
+
+## Architecture Diagram
 
 <img src="./app-archtecture.jpg" height="400" style="width: auto;">
 
-## Arcthitecture explainations and naming conventions
+---
 
-- ### View
-This is mainly SwiftUI and should not contains any logic, its simply renderes the current state of the view.
-A view has one ViewModel
-- ### ViewModel
-This has all the logic required to manipulate the view, like form validation, updating the state of the view. 
-This ViewModel also has a concept called `Configurations`.
+## Architecture Explanation and Naming Conventions
 
-Configuration consists of: 
-* Colors
-* Constants
-* Localizable Strings
+### View
+- Implemented using **SwiftUI**  
+- Should **not contain any business logic**  
+- Responsible only for rendering the current state of the view  
+- Each View has **one ViewModel**
 
-These are structs of which their values can be changed , they are not fixed we mainly change these values when testing, for example in the app we have a debounce of 500 milliseconds, we can update this to 0 in tests if we wihs to make the tests faster. These are ure usually injected so they can be injected and used anywhere with the feature of the app
+---
 
-A ViewModel can make use of many usescases
-- ### Usecase
-In most applications this layers just passes Data to the `ViewModel`. In our case it does much more. in such a way tha simplifies the implementation of the ViewModel and further separates concerns. The usecase introduces an entity that can be easily used by the View and `ViewModel`, so it transaforms and parepared the codable structs from the Network or any other datasource so that the view and `ViewModel` can easily use this object without further manipulation.
-A `usecase` owns the model that its manipulating for the view
-- ### Client
-In ourcase the client makes the network calls, the client's only knows how to fetch data from the given source
+### ViewModel
+- Contains all logic required to manipulate the view:
+  - Form validation  
+  - Updating view state
+- Introduces a concept called **Configurations**
 
+#### Configuration consists of:
+- Colors  
+- Constants  
+- Localized strings  
 
-### Naming Convention and Folder structure
+Configurations are defined as structs whose values are **not fixed** therefore all properties are declared using **vars**. These values can be modified, especially during testing.  
+For example, the app uses a debounce of **500 milliseconds**, which can be set to **0** in tests to make them faster.  
+
+Configurations are usually **injected**, allowing them to be reused across a feature and overridden when needed.  Similar to the use of an **@EnvironmentObject** in **SwiftUI**
+
+A ViewModel can make use of **multiple Use Cases**.
+
+---
+
+### Use Case
+In many applications, this layer simply passes data to the ViewModel. In our case, it does more:
+
+- Simplifies the ViewModel implementation  
+- Further separates concerns  
+- Transforms raw data into entities that can be easily consumed by the View and ViewModel  
+
+A Use Case:
+- Owns the model it manipulates  
+- Transforms `Codable` structs from the network or other data sources  
+- Exposes clean models that require no further manipulation by the View or ViewModel  
+
+---
+
+### Client
+- Responsible for making network calls  
+- Knows **only** how to fetch data from a given source  
+
+---
+
+## Naming Convention and Folder Structure
 
 <img src="./folder-structure.png" height="400" style="width: auto;">
 
-The app has two main componenents `Common` and `Features`
+The app is divided into two main components:
 
-### Common
+- `Common`  
+- `Features`  
 
-Here we have the `RequestManager` this handles the encoding and decoding of the requests and responses from the internet.
-We also created `EndpointProtocol` this allows to easily create structured HTTP `URLRequests` 
+---
 
-This allows us to make HTTP requests easily per `feature`:
+## Common
+
+The `Common` module contains shared infrastructure, including:
+
+### RequestManager
+- Handles generic encoding and decoding of HTTP requests and responses
+
+### EndpointProtocol
+- Enables the creation of structured HTTP `URLRequest`s  
+- Makes defining endpoints consistent, reusable and easy
+
+Example:
 
 ```swift
 func getPlaces() async throws -> PlacesResponse {
-        try await manager.perform(
-            request: PlacesEndpoint.getPlaces
-        )
-    }
+    try await manager.perform(
+        request: PlacesEndpoint.getPlaces
+    )
+}
 ```
 
 ### Features
 
-A feature is flow within the app like making a payment , so a feature groups related screens and related entities and models
+A **Feature** represents a flow within the app, such as making a payment.  
+Each feature groups **related screens, entities, and models**.
 
-### Folder structure per screen in a feature 
+---
 
-We use a consitent repeative folder structure per feature and per screen
+### Folder Structure per Screen in a Feature
+
+We use a **consistent, repeatable folder structure** for every feature and screen.
 
 <img src="./folder-structure-struct.png" height="400" style="width: auto;">
 
-The above is the folder structure of each screen
-Each screen has
+Each screen contains the following:
 
-* ## Data
-This folder contains all the logic to get the data 
-- ### Client 
-Knows how to make the HTTP requests
-- ### Model
-We have the raw response Object from from the network
-- ### Usecase
-* Mapping
-This knows how to map the raw HTTP response to a Model that can be easily usable by the `view` and `viewModel`
-* Model
-This containst the model that can easily be used by the view and the `ViewModel`
-* Usecase
-This has the usecase that uses the client to fetch the data from source and transforms to a `Model` that can be used by the View and ViewModel
+---
 
-* ## Views
-This has all the swiftUI views required to render this screen Including as well all the localizations
+### Data
 
+This folder contains all logic related to fetching and transforming data.
 
+#### Client
+- Responsible for making HTTP requests  
 
+#### Model
+- Contains the **Codable** response objects from the network  
 
+#### Use Case
+Includes:
 
+- **Mapping**  
+  Maps **Codable** HTTP responses into models that can be easily consumed by the `View` and `ViewModel`.
 
+- **Model**  
+  Contains models that can be directly used by the `View` and `ViewModel`.
 
+- **Use Case**  
+  Uses the `Client` to fetch data from the source and transforms it into a model usable by the `View` and `ViewModel`.
+
+---
+
+### Views
+
+Contains all SwiftUI views required to render the screen, including all localizations.
+
+----
+
+## Tests
+
+This app has `100%` codecoverage for the `ViewModel`. and `67%` overral.
+
+We also show case how we test all the mentioned layers of the app.
