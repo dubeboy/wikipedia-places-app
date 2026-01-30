@@ -161,3 +161,27 @@ All Classes are `final`
 * This app also supports Localization to `Dutch`.
 
 * We have added an easy win implicit animations.
+
+----
+
+## Installing and Running the app
+
+### Clone modified wikipedia app
+
+We can clone the modified wikipedia app as follows:
+
+```sh
+git clone https://github.com/dubeboy/wikipedia-ios &&
+cd wikipedia-ios &&
+xed .
+```
+
+### Running this project
+
+```sh
+git clone https://github.com/dubeboy/wikipedia-places-app &&
+cd wikipedia-places-app &&
+xed .
+```
+
+This will open the `Places` app and we can run this app as is , as it has no external dependecies .
