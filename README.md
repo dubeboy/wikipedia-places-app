@@ -185,3 +185,21 @@ xed .
 ```
 
 This will open the `Places` app and we can run this app as is , as it has no external dependecies .
+
+----
+
+### Possible improvement 
+
+In the `PlacesMapKitUsecase`.
+
+```swift
+    func openWikipediaApp(deeplinkUrl: EndpointProtocol) {
+        guard let deeplink = try? deeplinkUrl.createURLRequest().url else {
+            return
+        }
+
+        UIApplication.shared.open(deeplink, options: [:], completionHandler: nil)
+    }
+```
+
+This is not the function of a usecase we could introduce a `Router`, `PlacesListViewRouterProtol` under the `UI` folder of the `Places` feature to handle all navigation and it's testable.
